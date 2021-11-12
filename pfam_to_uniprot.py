@@ -34,7 +34,7 @@ rozbudowa_linku("cl0057")
 print(nasze_bialka)  # tablica dwuelementowych tablic, gdzie pierwszy element uniprot id, a drugi organism id
 print(len(nasze_bialka))
 # pobiera predicted aligned error, zlicza białka, których predykcje są w alphafoldzie
-licznik = 0
+licznik = 1
 wynik = []
 for protein in nasze_bialka:
     print(protein[0])
