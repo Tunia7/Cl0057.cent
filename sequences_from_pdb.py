@@ -1,6 +1,6 @@
-'''Program zwraca id uniprotowe, id organizmu, z którego pochodzi białko i sekwencję odczytaną z pliku pdb.
-Do id uniportowego dodałam _p, by wiedzieć potem, że to predykcja.
-Nazwy plików to skopiowany wynik z mojego programu pfam_alphafold_get_pdb.py, który pobrał te sekwencje'''
+# Program zwraca id uniprotowe, id organizmu, z którego pochodzi białko i sekwencję odczytaną z pliku pdb.
+# Do id uniportowego dodałam _p, by wiedzieć potem, że to predykcja.
+# Nazwy plików to skopiowany wynik z mojego programu pfam_alphafold_get_pdb.py, który pobrał te sekwencje
 
 
 # zwraca podzielony na zesplitowane linijki plik
