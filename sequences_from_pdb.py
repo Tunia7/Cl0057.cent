@@ -1,4 +1,5 @@
 '''Program zwraca id uniprotowe, id organizmu, z którego pochodzi białko i sekwencję odczytaną z pliku pdb.
+Do id uniportowego dodałam _p, by wiedzieć potem, że to predykcja.
 Nazwy plików to skopiowany wynik z mojego programu pfam_alphafold_get_pdb.py, który pobrał te sekwencje'''
 
 
@@ -49,4 +50,4 @@ pliki = ['P0C079_83333.pdb', 'P0AFY8_83333.pdb', 'P9WJ47_83332.pdb', 'P95006_833
 
 for plik in pliki:
     uniprot_id, organizm_id = plik.split('_')
-    print('>',uniprot_id, organizm_id[:-4],'\n', tlumaczenia_na_skroty(plik))
+    print(f'>{uniprot_id}_p {organizm_id[:-4]}\n{tlumaczenia_na_skroty(plik)}')
