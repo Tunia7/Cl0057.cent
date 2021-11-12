@@ -1,1 +1,3 @@
-baza(?).txt
+baza*.txt
+*.json
+.idea
