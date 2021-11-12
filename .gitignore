@@ -1,3 +1,4 @@
 baza*.txt
 *.json
 .idea
+*.pdb
