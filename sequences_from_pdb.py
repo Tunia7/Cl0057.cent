@@ -49,4 +49,4 @@ pliki = ['P0C079_83333.pdb', 'P0AFY8_83333.pdb', 'P9WJ47_83332.pdb', 'P95006_833
 
 for plik in pliki:
     uniprot_id, organizm_id = plik.split('_')
-    print(uniprot_id, organizm_id[:-4], tlumaczenia_na_skroty(plik))
+    print('>',uniprot_id, organizm_id[:-4],'\n', tlumaczenia_na_skroty(plik))
