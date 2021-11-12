@@ -35,7 +35,6 @@ print(nasze_bialka)  # tablica dwuelementowych tablic, gdzie pierwszy element un
 print(len(nasze_bialka))
 # pobiera predicted aligned error, zlicza białka, których predykcje są w alphafoldzie
 licznik = 0
-wynik = []
 for protein in nasze_bialka:
     try:
         wget.download(rf'https://alphafold.ebi.ac.uk/files/AF-{protein[0]}-F1-predicted_aligned_error_v1.json',
