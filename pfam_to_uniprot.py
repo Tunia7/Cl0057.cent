@@ -37,7 +37,6 @@ print(len(nasze_bialka))
 licznik = 0
 wynik = []
 for protein in nasze_bialka:
-    print(protein[0])
     try:
         wget.download(rf'https://alphafold.ebi.ac.uk/files/AF-{protein[0]}-F1-predicted_aligned_error_v1.json',
                       f"{protein[0]}_{protein[1]}.json")
