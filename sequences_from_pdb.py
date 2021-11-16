@@ -27,18 +27,18 @@ def wyciagniecie_sekwencji(plik):
 def tlumaczenia_na_skroty(plik):
     sekwencja = wyciagniecie_sekwencji(plik)
     sekwencja_skroty = ''
-    try:
-        for aminokwas in sekwencja:
+    for aminokwas in sekwencja:
+        try:
             sekwencja_skroty += slownik[aminokwas]
-    except:
-        pass
+        except:
+            pass
     return sekwencja_skroty
 
 
-slownik = d = {'CYS': 'C', 'ASP': 'D', 'SER': 'S', 'GLN': 'Q', 'LYS': 'K',
-               'ILE': 'I', 'PRO': 'P', 'THR': 'T', 'PHE': 'F', 'ASN': 'N',
-               'GLY': 'G', 'HIS': 'H', 'LEU': 'L', 'ARG': 'R', 'TRP': 'W',
-               'ALA': 'A', 'VAL': 'V', 'GLU': 'E', 'TYR': 'Y', 'MET': 'M'}
+slownik = {'CYS': 'C', 'ASP': 'D', 'SER': 'S', 'GLN': 'Q', 'LYS': 'K',
+           'ILE': 'I', 'PRO': 'P', 'THR': 'T', 'PHE': 'F', 'ASN': 'N',
+           'GLY': 'G', 'HIS': 'H', 'LEU': 'L', 'ARG': 'R', 'TRP': 'W',
+           'ALA': 'A', 'VAL': 'V', 'GLU': 'E', 'TYR': 'Y', 'MET': 'M', 'MSE': '?'}
 
 pliki = ['P0C079_83333.pdb', 'P0AFY8_83333.pdb', 'P9WJ47_83332.pdb', 'P95006_83332.pdb', 'P9WL41_83332.pdb',
          'P9WIJ7_83332.pdb', 'P9WJ45_83332.pdb', 'P0A6Z6_83333.pdb', 'P9WJ87_83332.pdb', 'P9WJ57_83332.pdb',
