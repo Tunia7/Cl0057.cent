@@ -7,7 +7,7 @@ rodziny = []
 for linia in html_kod:
     linia = linia.strip()
     if linia[:14] == r'href="/family/':
-        rodziny.append(linia[14:-2])
+        rodziny.append(linia[14:-2])  # przykładowa linijka to "href="/family/PF19807">"
 wszystkie_zakresy = ""
 for rodzina in rodziny:
     if 0 == os.path.isfile(f"{rodzina}.txt"):
