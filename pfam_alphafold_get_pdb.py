@@ -35,7 +35,7 @@ with open(r"zakresy.txt") as ranges:
         line = line.strip().split("/")
         dict_ranges[line[0][1:]] = line[1].split("-")
 
-for protein in our_proteins:# create table with names of pdb files
+for protein in our_proteins:  # create table with names of pdb files
 
     if 0 == os.path.isfile(f'{protein[0]}_{protein[1]}.pdb'):
         try:
