@@ -2,48 +2,43 @@ import wget
 import os
 
 
-# pobiera listę uniprot id i organizm id  białek należących do klanu
-def rozbudowa_linku(klan):
-    plik = open(klan)
-    rodziny = plik.readlines()
-    plik.close()
-    rodziny = rodziny[0].split()
-    link_bazowy = r"https://www.uniprot.org/uniprot/?query="
-    for rodzina in rodziny:
-        link_bazowy += f'database:(type:pfam%20{rodzina})%20OR%20'
-    link_bazowy = link_bazowy[:-8] + '&columns=id,organism-id'
-    wget.download(link_bazowy, "baza.txt")
+def get_ids(clan):
+    with open(clan) as file:
+        families = file.readlines()
+        families = families[0].split()
+        link = r"https://www.uniprot.org/uniprot/?query="
+        for family in families:
+            link += f'database:(type:pfam%20{family})%20OR%20'
+        link = link[:-8] + '&format=tab&columns=id,organism-id&sort=score'
+        wget.download(link, "base.txt")
 
 
-# identyfikatory organizmów na podstawie ftp alphafolda
-alphafold_organizmy = ['7955', '237562', '10090', '83333', '7227', '243232', '36329', '83332', '6239', '44589',
-                       '353153', '559292', '284812', '10116', '9606', '3702', '4577', '5671', '93061', '3847', '39947']
+# organism ids in alphafold
+organism_alphafold = ['7955', '237562', '10090', '83333', '7227', '243232', '36329', '83332', '6239', '44589',
+                      '353153', '559292', '284812', '10116', '9606', '3702', '4577', '5671', '93061', '3847', '39947']
+get_ids("cl0057.txt")
+our_proteins = []
+if os.path.isfile("base.txt") == 0:
+    get_ids("cl0057.txt")
+with open("base.txt") as file:
+    for result in file.readlines()[1:]:
+        result = result.split()
+        print(result)
+        id = result[0]
+        organism = result[1]
+        if organism in organism_alphafold:
+            our_proteins.append(result)
 
-nasze_bialka = []
-if os.path.isfile("baza.txt") == 0:
-    rozbudowa_linku()
-with open("baza.txt") as plik:
-    for wynik in plik.readlines():
-        wynik = wynik.split()
-        id = wynik[0]
-        organizm = wynik[1]
-        if organizm in alphafold_organizmy:
-            nasze_bialka.append(wynik)
+# ranges
+dict_ranges = {}
+with open(r"zakresy.txt") as ranges:
+    for line in ranges.readlines():
+        print(line)
+        line = line.strip().split("/")
+        dict_ranges[line[0][1:]] = line[1].split("-")
 
-# plik 'cl0057' zawiera listę rodzin z klanu w jednej linijce rodzielone spacją
+for protein in our_proteins:# create table with names of pdb files
 
-
-# zakresy
-słownik_zakresow = {}
-with open(r"zakresy.txt") as zakresy:
-    for linia in zakresy.readlines():
-        print(linia)
-        linia = linia.strip().split("/")
-        słownik_zakresow[linia[0][1:]] = linia[1].split("-")
-
-wynik = ""
-# tworzy tablicę z nazwami plików pdb, które uda nam sie pobrać
-for protein in nasze_bialka:
     if 0 == os.path.isfile(f'{protein[0]}_{protein[1]}.pdb'):
         try:
             wget.download(rf'https://alphafold.ebi.ac.uk/files/AF-{protein[0]}-F1-model_v1.pdb',
@@ -52,13 +47,12 @@ for protein in nasze_bialka:
             pass
     if 1 == os.path.isfile(f'{protein[0]}_{protein[1]}.pdb'):
         wget.download(rf'https://www.uniprot.org/uniprot/{protein[0]}.fasta', f'{protein[0]}_{protein[1]}.fasta')
-        with open(f'{protein[0]}_{protein[1]}.fasta') as plik:
-            if protein[0] in słownik_zakresow.keys():
-                wynik += f'>alphafold_{protein[0]}_{protein[1]}|\n'
-
-                zakres_odpowiedni=słownik_zakresow[protein[0]]
-                pom=""
-                for linia in plik.readlines()[1:]:
-                    pom += linia.strip()
-                wynik +=pom[int(zakres_odpowiedni[0]):int(zakres_odpowiedni[1])] + "\n"
-print(wynik)
+        with open(f'{protein[0]}_{protein[1]}.fasta') as file:
+            if protein[0] in dict_ranges.keys():
+                print()
+                print(f'>alphafold_{protein[0]}_{protein[1]}|')
+                correct_range = dict_ranges[protein[0]]
+                result = ""
+                for line in file.readlines()[1:]:
+                    result += line.strip()
+                print(result[int(correct_range[0]):int(correct_range[1])])
