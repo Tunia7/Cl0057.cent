@@ -23,7 +23,6 @@ if os.path.isfile("base.txt") == 0:
 with open("base.txt") as file:
     for result in file.readlines()[1:]:
         result = result.split()
-        print(result)
         id = result[0]
         organism = result[1]
         if organism in organism_alphafold:
@@ -33,7 +32,6 @@ with open("base.txt") as file:
 dict_ranges = {}
 with open(r"zakresy.txt") as ranges:
     for line in ranges.readlines():
-        print(line)
         line = line.strip().split("/")
         dict_ranges[line[0][1:]] = line[1].split("-")
 
@@ -49,7 +47,6 @@ for protein in our_proteins:# create table with names of pdb files
         wget.download(rf'https://www.uniprot.org/uniprot/{protein[0]}.fasta', f'{protein[0]}_{protein[1]}.fasta')
         with open(f'{protein[0]}_{protein[1]}.fasta') as file:
             if protein[0] in dict_ranges.keys():
-                print()
                 print(f'>alphafold_{protein[0]}_{protein[1]}|')
                 correct_range = dict_ranges[protein[0]]
                 result = ""
